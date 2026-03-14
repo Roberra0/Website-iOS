@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Call Card</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCCGP9K8G5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BCCGP9K8G5');
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f5f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Adobe Clean', 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    }
+
+    .card {
+      position: relative;
+      width: 370px;
+      height: 102px;
+      background: linear-gradient(180deg, #3A4572 0%, #04367F 100%);
+      border-radius: 2500px;
+      overflow: hidden;
+    }
+
+    /* ── AVATAR (left, initial) ── */
+    .avatar {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      transform-origin: center center;
+    }
+    .avatar img {
+      width: 100%; height: 100%;
+      object-fit: contain; display: block;
+    }
+    /* ── TEXT ── */
+    .text-group {
+      position: absolute;
+      left: 104px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    .name {
+      font-size: 30px;
+      font-weight: 400;
+      color: #ffffff;
+      line-height: 38px;
+      white-space: nowrap;
+    }
+    .email-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 1px;
+    }
+    .email-badge {
+      width: 12px; height: 12px;
+      background: #CFCFCF;
+      border-radius: 3px;
+      font-size: 7px; font-weight: 700;
+      color: #000;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .email-addr {
+      font-size: 10px; font-weight: 300;
+      color: #CFCFCF; white-space: nowrap;
+    }
+
+    /* ── CALL BUTTON (right, initial) ── */
+    .call-btn {
+      position: absolute;
+      width: 88px; height: 88px;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #32D058;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center; justify-content: center;
+      z-index: 3;
+      transform-origin: center center;
+    }
+    .call-btn:hover { filter: brightness(1.05); }
+
+    /* ── MEMOJI SHAKE ANIMATION ── */
+    @keyframes memoji-shake {
+      0%,100% { transform: translateY(-50%) scaleX(-1) rotate(0deg); }
+      10%     { transform: translateY(-50%) scaleX(-1) rotate(-8deg); }
+      20%     { transform: translateY(-50%) scaleX(-1) rotate(8deg); }
+      30%     { transform: translateY(-50%) scaleX(-1) rotate(-8deg); }
+      40%     { transform: translateY(-50%) scaleX(-1) rotate(8deg); }
+      50%     { transform: translateY(-50%) scaleX(-1) rotate(-6deg); }
+      60%     { transform: translateY(-50%) scaleX(-1) rotate(6deg); }
+      70%     { transform: translateY(-50%) scaleX(-1) rotate(-4deg); }
+      80%     { transform: translateY(-50%) scaleX(-1) rotate(4deg); }
+      90%     { transform: translateY(-50%) scaleX(-1) rotate(-2deg); }
+    }
+
+    /* ── PHONE RING ANIMATION ── */
+    @keyframes phone-ring {
+      0%                        { transform: rotate(0deg);   filter: blur(0px); }
+      2%                        { transform: rotate(28deg);  filter: blur(1px); }
+      4%                        { transform: rotate(-30deg); filter: blur(1px); }
+      6%                        { transform: rotate(32deg);  filter: blur(1px); }
+      8%                        { transform: rotate(-28deg); filter: blur(1px); }
+      10%                       { transform: rotate(30deg);  filter: blur(1px); }
+      12%                       { transform: rotate(-32deg); filter: blur(1px); }
+      14%                       { transform: rotate(29deg);  filter: blur(1px); }
+      16%                       { transform: rotate(-30deg); filter: blur(1px); }
+      18%                       { transform: rotate(31deg);  filter: blur(1px); }
+      20%                       { transform: rotate(-28deg); filter: blur(1px); }
+      22%                       { transform: rotate(30deg);  filter: blur(1px); }
+      24%                       { transform: rotate(-31deg); filter: blur(1px); }
+      26%                       { transform: rotate(28deg);  filter: blur(1px); }
+      28%                       { transform: rotate(-30deg); filter: blur(1px); }
+      30%                       { transform: rotate(32deg);  filter: blur(1px); }
+      32%                       { transform: rotate(-29deg); filter: blur(1px); }
+      34%                       { transform: rotate(30deg);  filter: blur(1px); }
+      36%                       { transform: rotate(-31deg); filter: blur(1px); }
+      38%                       { transform: rotate(29deg);  filter: blur(1px); }
+      40%                       { transform: rotate(-30deg); filter: blur(1px); }
+      42%                       { transform: rotate(31deg);  filter: blur(1px); }
+      44%                       { transform: rotate(-28deg); filter: blur(1px); }
+      46%                       { transform: rotate(30deg);  filter: blur(1px); }
+      48%                       { transform: rotate(-30deg); filter: blur(1px); }
+      50%                       { transform: rotate(18deg);  filter: blur(1px); }
+      52%                       { transform: rotate(-16deg); filter: blur(0px); }
+      54%                       { transform: rotate(8deg);   filter: blur(0px); }
+      56%                       { transform: rotate(0deg);   filter: blur(0px); }
+      56.01%, 100%              { transform: rotate(0deg);   filter: blur(0px); }
+    }
+    .call-btn img {
+      animation: phone-ring 5s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    /* ── ARROW — pinned to left ── */
+    .end-arrow {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      cursor: pointer;
+    }
+    .end-arrow:hover { opacity: 0.7; }
+
+    /* ── APP ICONS — centered between arrow and memoji ── */
+    .app-icons {
+      position: absolute;
+      left: 56px;          /* after arrow */
+      right: 94px;         /* before memoji (595 - 501) */
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* pill wrapper */
+    .app-icon {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0px;
+      padding: 4px 4px;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+      transition: background 600ms ease, gap 600ms ease, padding-right 600ms ease;
+    }
+    .app-icon:hover {
+      background: rgba(255,255,255,0.13);
+      gap: 7px;
+      padding-right: 12px;
+    }
+    /* icon circle */
+    .app-icon-clip {
+      width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+    .app-icon-clip img {
+      width: 50px; height: 50px;
+      object-fit: cover;
+      display: block;
+      filter: drop-shadow(0px 1px 4px rgba(0,0,0,0.30));
+    }
+    /* label */
+    .app-icon-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      white-space: nowrap;
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-width 600ms ease, opacity 400ms ease 150ms;
+    }
+    .app-icon:hover .app-icon-label {
+      max-width: 80px;
+      opacity: 1;
+    }
+
+    /* ── SPEECH BUBBLE ── */
+    .speech-bubble {
+      position: absolute;
+      right: 102px;
+      top: 50%;
+      transform: translateY(-20%);
+      background: #fff;
+      border-radius: 14px;
+      padding: 5px 11px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #1c1c1e;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+      transition: opacity 220ms ease;
+    }
+    /* soft curved tail pointing right toward memoji */
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      right: -9px;
+      bottom: 5px;
+      width: 12px;
+      height: 10px;
+      background: #fff;
+      border-radius: 0 0 10px 0;
+      clip-path: polygon(0 0, 0% 100%, 100% 100%);
+    }
+
+    /* ── iMESSAGE OVERLAY ── */
+    #messageOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f0;
+    }
+    .imsg-window {
+      width: 595px;
+      height: 520px;
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .imsg-header {
+      height: 56px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #e5e5ea;
+      position: relative;
+      padding: 0 16px;
+    }
+    .imsg-back {
+      position: absolute;
+      left: 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 17px;
+      color: #007AFF;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px 6px;
+    }
+    .imsg-back:hover { opacity: 0.7; }
+    .imsg-back svg { width: 10px; height: 16px; }
+    .imsg-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1c1c1e;
+    }
+    .imsg-messages {
+      flex: 1;
+      padding: 20px 16px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .imsg-messages::-webkit-scrollbar { display: none; }
+    .imsg-bubble {
+      max-width: 75%;
+      padding: 11px 15px;
+      border-radius: 18px;
+      font-size: 15px;
+      line-height: 1.5;
+      position: relative;
+    }
+    .imsg-gray {
+      background: #E9E9EB;
+      color: #1c1c1e;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .imsg-gray::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -7px;
+      width: 12px;
+      height: 14px;
+      background: #E9E9EB;
+      border-radius: 0 0 8px 0;
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    }
+    .imsg-blue {
+      background: #148BFD;
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    .imsg-blue::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: -7px;
+      width: 12px;
+      height: 14px;
+      background: #148BFD;
+      border-radius: 0 0 0 8px;
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+    }
+    .imsg-inputbar {
+      height: 54px;
+      flex-shrink: 0;
+      background: #f2f2f7;
+      border-top: 1px solid #e5e5ea;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+    }
+    .imsg-inputfield {
+      flex: 1;
+      height: 34px;
+      background: #fff;
+      border-radius: 17px;
+      border: 1px solid #c7c7cc;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 15px;
+      color: #1c1c1e;
+      pointer-events: none;
+      user-select: none;
+    }
+    .imsg-inputfield.sent { color: #8e8e93; }
+    .imsg-send {
+      width: 30px;
+      height: 30px;
+      background: #148BFD;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 150ms ease;
+    }
+    .imsg-send:hover { opacity: 0.85; }
+    .imsg-send.sent { pointer-events: none; opacity: 0.4; }
+  </style>
+
+  <!-- Directional (horizontal) blur filter -->
+  <svg style="position:absolute;width:0;height:0" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="hblur" x="-30%" width="160%" y="0%" height="100%">
+        <feGaussianBlur id="hblur-kernel" in="SourceGraphic" stdDeviation="0 0"/>
+      </filter>
+    </defs>
+  </svg>
+</head>
+<body>
+  <div class="card" id="card">
+
+    <!-- Profile photo -->
+    <div class="avatar" id="avatar">
+      <img src="icons/memoji.png" alt="Roberra">
+    </div>
+
+    <!-- Name + email -->
+    <div class="text-group" id="textGroup">
+      <div class="name">Roberra</div>
+      <div class="email-row">
+        <div class="email-badge">E</div>
+        <span class="email-addr">roberra.aklilu@gmail.com</span>
+      </div>
+    </div>
+
+    <!-- Green call button -->
+    <button class="call-btn" id="callBtn" aria-label="Call">
+      <img src="icons/phoneicon.png" alt="Call" style="width:38px;height:38px;object-fit:contain;">
+    </button>
+
+    <!-- Return arrow — U-turn shape, pinned left, shown in end state -->
+    <svg class="end-arrow" id="endArrow" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" style="opacity:0;pointer-events:none;">
+      <!-- U body: top stem → right semicircle → bottom stem -->
+      <path d="M 4 8 L 22 8 A 7 7 0 0 1 22 22 L 5 22" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Arrowhead pointing left -->
+      <path d="M 10 17 L 4 22 L 10 27" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+
+    <!-- Speech bubble -->
+    <div class="speech-bubble" id="speechBubble">hi.</div>
+
+    <!-- App icons — centered -->
+    <div class="app-icons" id="appIcons">
+      <div class="app-icon" id="msgIcon">
+        <div class="app-icon-clip">
+          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="msgGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#67FF81"/>
+                <stop offset="100%" stop-color="#01B41F"/>
+              </linearGradient>
+            </defs>
+            <circle cx="25" cy="25" r="25" fill="url(#msgGrad)"/>
+            <!-- Speech bubble from speechbubble.svg, scaled to fit circle -->
+            <g transform="translate(8, 9) scale(1.15)">
+              <ellipse cx="14.5" cy="12.5" rx="14.5" ry="12.5" fill="white"/>
+              <path d="M7.58745 23.808C8.71995 22.0142 8.38933 20.5511 8.38933 20.5511L10.8279 20.0001C10.8279 20.0001 11.5993 23.414 9.38118 24.9405C7.16307 26.4669 5.10205 26.42 5.10205 26.42C5.10205 26.42 6.45496 25.6017 7.58745 23.808Z" fill="white" stroke="white" stroke-width="0.5"/>
+            </g>
+          </svg>
+        </div>
+        <span class="app-icon-label">Messages</span>
+      </div>
+      <div class="app-icon">
+        <div class="app-icon-clip"><img src="icons/notes.svg" alt="Resume"></div>
+        <span class="app-icon-label">Resume</span>
+      </div>
+      <div class="app-icon">
+        <div class="app-icon-clip"><img src="icons/photos.svg" alt="Photos"></div>
+        <span class="app-icon-label">Photos</span>
+      </div>
+      <div class="app-icon">
+        <div class="app-icon-clip"><img src="icons/github.ico" alt="GitHub" style="width:44px;height:44px;border-radius:50%;margin-top:-3px;"></div>
+        <span class="app-icon-label">GitHub</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- iMessage overlay -->
+  <div id="messageOverlay" style="opacity:0;pointer-events:none;">
+    <div class="imsg-window">
+      <div class="imsg-header">
+        <button class="imsg-back" id="imsgBack">
+          <svg viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5 1.5L2 8L8.5 14.5" stroke="#007AFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+        </button>
+        <span class="imsg-name">Roberra</span>
+      </div>
+      <div class="imsg-messages">
+        <div class="imsg-bubble imsg-blue">Tell me about yourself.</div>
+        <div class="imsg-bubble imsg-gray" id="blueBubble">I've spent 11 years building 0→1 products from 4 lenses: product management, consulting, venture investing, and software engineering.<br><br>I believe great products start with ruthless user &amp; problem clarity, are built for defensibility, and are measured with the right metrics at the right stages. Good design is imperative.<br><br>I'm currently a Principal Product Manager @ Adobe.</div>
+      </div>
+      <div class="imsg-inputbar">
+        <div class="imsg-inputfield" id="imsgInput">tell me more</div>
+        <div class="imsg-send" id="imsgSend">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <line x1="8" y1="14" x2="8" y2="3" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M4 7L8 2.5L12 7" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const card            = document.getElementById('card');
+    const avatar          = document.getElementById('avatar');
+    const textGroup       = document.getElementById('textGroup');
+    const callBtn         = document.getElementById('callBtn');
+    const appIcons        = document.getElementById('appIcons');
+    const endArrow        = document.getElementById('endArrow');
+    const speechBubble    = document.getElementById('speechBubble');
+const hblurKernel     = document.getElementById('hblur-kernel');
+    const messageOverlay  = document.getElementById('messageOverlay');
+    const blueBubble      = document.getElementById('blueBubble');
+    const msgIcon         = document.getElementById('msgIcon');
+
+    const START_WIDTH  = 370;
+    const END_WIDTH    = 595;
+    const AVATAR_X     = 12;
+    const CALL_X       = START_WIDTH - 88 - 10; // 272 — call button left in start state
+    const AVATAR_END_X = 501;                    // memoji rests near right edge in end state
+
+    // ── Analytics helper ──
+    function track(event_name, params) {
+      if (typeof gtag === 'undefined') return;
+      gtag('event', event_name, { ...params, timestamp_ms: Date.now() });
+    }
+
+// ── Active / inactive time tracking ──
+    let activeMs = 0, lastActive = Date.now();
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        activeMs += Date.now() - lastActive;
+      } else {
+        lastActive = Date.now();
+      }
+    });
+    window.addEventListener('beforeunload', () => {
+      if (!document.hidden) activeMs += Date.now() - lastActive;
+      track('time_on_page', { active_ms: activeMs, page: 'call-card' });
+    });
+
+    const DURATION   = 500; // ms
+    let running    = false;
+    let inEndState = false;
+    // Cubic ease-in-out
+    function ease(t) {
+      return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+    }
+
+    // ── Forward: initial → end state ──
+    callBtn.addEventListener('click', () => {
+      if (running || inEndState) return;
+      running = true;
+      track('phone_button_click', { from_state: 'initial' });
+
+      callBtn.querySelector('img').style.animation = 'none';
+      callBtn.style.right = 'auto';
+      callBtn.style.left  = CALL_X + 'px';
+      callBtn.style.top    = '50%';
+      callBtn.style.transform = 'translateY(-50%)';
+      avatar.style.top    = '50%';
+      avatar.style.transform = 'translateY(-50%)';
+
+      const startTime = performance.now();
+
+      function frame(now) {
+        const raw = Math.min((now - startTime) / DURATION, 1);
+        const t   = ease(raw);
+
+        const MAX_BLUR = 12;
+        const blurX = MAX_BLUR * Math.sin(raw * Math.PI);
+        hblurKernel.setAttribute('stdDeviation', `${blurX.toFixed(1)} 0`);
+        const blurFilter = blurX > 0.5 ? 'url(#hblur)' : 'none';
+        const stretch = 1 + 0.2 * Math.sin(raw * Math.PI);
+
+        // Card expands
+        card.style.width = (START_WIDTH + (END_WIDTH - START_WIDTH) * t) + 'px';
+
+        const ax = AVATAR_X + (AVATAR_END_X - AVATAR_X) * t;
+        const flipSign = raw < 0.5 ? 1 : -1;
+        avatar.style.left      = ax + 'px';
+        avatar.style.filter    = blurFilter;
+        avatar.style.transform = `translateY(-50%) scaleX(${flipSign * stretch})`;
+
+        const cx = CALL_X + (AVATAR_X - CALL_X) * t;
+        callBtn.style.left      = cx + 'px';
+        callBtn.style.filter    = blurFilter;
+        callBtn.style.transform = `translateY(-50%) scaleX(${stretch})`;
+        callBtn.style.opacity   = (1 - t).toString();
+
+        textGroup.style.opacity = Math.max(0, 1 - t * 3).toString();
+
+        if (raw < 1) {
+          requestAnimationFrame(frame);
+        } else {
+          avatar.style.filter    = 'drop-shadow(0px 4px 4px rgba(0,0,0,0.25))';
+          avatar.style.transform = 'translateY(-50%) scaleX(-1)';
+          callBtn.style.visibility = 'hidden';
+          textGroup.style.visibility = 'hidden';
+
+          appIcons.style.transition    = 'opacity 220ms ease';
+          appIcons.style.opacity       = '1';
+          appIcons.style.pointerEvents = 'auto';
+          endArrow.style.transition    = 'opacity 220ms ease';
+          endArrow.style.opacity       = '1';
+          endArrow.style.pointerEvents   = 'auto';
+          speechBubble.style.transition = 'opacity 220ms ease 300ms';
+          speechBubble.style.opacity    = '1';
+
+          avatar.style.cursor = 'pointer';
+          running = false;
+          inEndState = true;
+        }
+      }
+
+      requestAnimationFrame(frame);
+    });
+
+    // ── Reverse: end state → initial ──
+    endArrow.addEventListener('click', () => {
+      if (running || !inEndState) return;
+      running = true;
+      track('back_arrow_click', { from_state: 'end' });
+
+      // Fade out icons + arrow instantly
+      appIcons.style.transition = 'opacity 150ms ease';
+      appIcons.style.opacity    = '0';
+      appIcons.style.pointerEvents = 'none';
+      endArrow.style.transition = 'opacity 150ms ease';
+      endArrow.style.opacity    = '0';
+
+      // Restore hidden elements
+      callBtn.style.visibility = 'visible';
+      callBtn.style.opacity    = '0';
+      callBtn.style.left       = AVATAR_X + 'px';
+      callBtn.style.top        = '50%';
+      callBtn.style.transform  = 'translateY(-50%)';
+      callBtn.style.filter     = 'none';
+      textGroup.style.visibility = 'visible';
+      textGroup.style.opacity    = '0';
+
+      const startTime = performance.now();
+
+      function frameBack(now) {
+        const raw = Math.min((now - startTime) / DURATION, 1);
+        const t   = ease(raw);
+
+        const MAX_BLUR = 12;
+        const blurX = MAX_BLUR * Math.sin(raw * Math.PI);
+        hblurKernel.setAttribute('stdDeviation', `${blurX.toFixed(1)} 0`);
+        const blurFilter = blurX > 0.5 ? 'url(#hblur)' : 'none';
+        const stretch = 1 + 0.2 * Math.sin(raw * Math.PI);
+
+        // Card shrinks
+        card.style.width = (END_WIDTH + (START_WIDTH - END_WIDTH) * t) + 'px';
+
+        // Avatar pans LEFT (AVATAR_END_X → AVATAR_X), flips back
+        const ax = AVATAR_END_X + (AVATAR_X - AVATAR_END_X) * t;
+        const flipSign = raw < 0.5 ? -1 : 1;
+        avatar.style.left      = ax + 'px';
+        avatar.style.filter    = blurFilter;
+        avatar.style.transform = `translateY(-50%) scaleX(${flipSign * stretch})`;
+
+        // Call button pans RIGHT (AVATAR_X → CALL_X), fades in
+        const cx = AVATAR_X + (CALL_X - AVATAR_X) * t;
+        callBtn.style.left      = cx + 'px';
+        callBtn.style.filter    = blurFilter;
+        callBtn.style.transform = `translateY(-50%) scaleX(${stretch})`;
+        callBtn.style.opacity   = t.toString();
+
+        // Text fades in
+        textGroup.style.opacity = Math.min(1, t * 3).toString();
+
+        if (raw < 1) {
+          requestAnimationFrame(frameBack);
+        } else {
+          // Restore initial state fully
+          avatar.style.filter    = 'none';
+          avatar.style.transform = 'translateY(-50%)';
+          avatar.style.left      = AVATAR_X + 'px';
+          card.style.width       = '';
+          callBtn.style.left     = 'auto';
+          callBtn.style.right    = '10px';
+          callBtn.style.filter   = 'none';
+          callBtn.style.transform = 'translateY(-50%)';
+          callBtn.style.opacity  = '1';
+          callBtn.querySelector('img').style.animation = '';
+          textGroup.style.opacity = '1';
+          hblurKernel.setAttribute('stdDeviation', '0 0');
+          appIcons.style.transition    = 'none';
+          endArrow.style.transition    = 'none';
+          endArrow.style.pointerEvents  = 'none';
+          speechBubble.style.transition = 'none';
+          speechBubble.style.opacity    = '0';
+          speechBubble.textContent      = 'hi.';
+          bubbleIndex = 0;
+          avatar.style.animation = 'none';
+          avatar.style.cursor    = 'default';
+
+          running = false;
+          inEndState = false;
+        }
+      }
+
+      setTimeout(() => requestAnimationFrame(frameBack), 150);
+    });
+
+    // ── Memoji click: shake + bubble cycle ──
+    const bubbleMessages = ['hi.', 'whoa.', 'umm', 'stop!', 'click me again, i dare you', '...', 'the last click qualified you as an active user', 'ddos attack pending', 'still here?!', "you're giving me a headache!", 'i respect the dedication', 'go click on another site', 'clicking again wont do anything', 'have you heard of the butterfly effect?', 'clicking again will...', '... set off a chain reaction of catastrophic proportions!', "you're wasting valuable compute"];
+    let bubbleIndex = 0;
+
+    let bubbleFadeTimer = null;
+
+    avatar.addEventListener('click', () => {
+      if (!inEndState || running) return;
+      bubbleIndex = (bubbleIndex + 1) % bubbleMessages.length;
+      speechBubble.textContent = bubbleMessages[bubbleIndex];
+      speechBubble.style.transition = 'opacity 220ms ease';
+      speechBubble.style.opacity = '1';
+      avatar.style.animation = 'none';
+      avatar.offsetHeight; // force reflow
+      avatar.style.animation = 'memoji-shake 500ms ease-in-out';
+      track('memoji_click', { bubble_index: bubbleIndex, message_shown: bubbleMessages[bubbleIndex] });
+
+      // Fade out after 3s for all messages except 'hi.'
+      clearTimeout(bubbleFadeTimer);
+      if (bubbleIndex !== 0) {
+        bubbleFadeTimer = setTimeout(() => {
+          speechBubble.style.transition = 'opacity 600ms ease';
+          speechBubble.style.opacity = '0';
+        }, 3000);
+      }
+    });
+
+    // ── Message state ──
+    function enterMessageState() {
+      if (running) return;
+      track('message_icon_click', { action: 'open_imessage_overlay' });
+      card.style.transition = 'opacity 200ms ease';
+      card.style.opacity = '0';
+      card.style.pointerEvents = 'none';
+      setTimeout(() => {
+        // Reset blue bubble for animation
+        blueBubble.style.transition = 'none';
+        blueBubble.style.opacity = '0';
+        blueBubble.style.transform = 'translateY(12px)';
+        messageOverlay.style.transition = 'opacity 220ms ease';
+        messageOverlay.style.opacity = '1';
+        messageOverlay.style.pointerEvents = 'auto';
+        setTimeout(() => {
+          blueBubble.style.transition = 'opacity 320ms ease, transform 320ms ease';
+          blueBubble.style.opacity = '1';
+          blueBubble.style.transform = 'translateY(0)';
+        }, 300);
+      }, 150);
+    }
+
+    let overlayClickHandler = null;
+
+    function enableOverlayClose() {
+      if (overlayClickHandler) return; // already active
+      messageOverlay.style.cursor = 'pointer';
+      overlayClickHandler = () => {
+        disableOverlayClose();
+        exitMessageState();
+      };
+      messageOverlay.addEventListener('click', overlayClickHandler);
+    }
+
+    function disableOverlayClose() {
+      if (overlayClickHandler) {
+        messageOverlay.removeEventListener('click', overlayClickHandler);
+        overlayClickHandler = null;
+      }
+      messageOverlay.style.cursor = '';
+    }
+
+    function exitMessageState() {
+      disableOverlayClose();
+      messageOverlay.style.transition = 'opacity 180ms ease';
+      messageOverlay.style.opacity = '0';
+      messageOverlay.style.pointerEvents = 'none';
+      // Reset send/input state
+      sendPhase = 0;
+      imsgSend.classList.remove('sent');
+      imsgInput.classList.remove('sent');
+      imsgInput.textContent = 'tell me more';
+      // Remove any dynamically added bubbles (keep only original ones)
+      const allBubbles = imsgMessages.querySelectorAll('.imsg-bubble');
+      allBubbles.forEach((b, i) => { if (i >= originalBubbleCount) b.remove(); });
+      setTimeout(() => {
+        card.style.transition = 'opacity 200ms ease';
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
+        setTimeout(() => { card.style.transition = ''; }, 200);
+      }, 120);
+    }
+
+    document.getElementById('imsgBack').addEventListener('click', e => {
+      e.stopPropagation();
+      track('message_back_button_click', { action: 'close_imessage_overlay' });
+      exitMessageState();
+    });
+
+    // ── Send button ──
+    const imsgSend  = document.getElementById('imsgSend');
+    const imsgInput = document.getElementById('imsgInput');
+    const imsgMessages = document.querySelector('.imsg-messages');
+    const originalBubbleCount = imsgMessages.querySelectorAll('.imsg-bubble').length;
+    let sendPhase = 0; // 0 = tell me more, 1 = can I see work
+
+    function addBubble(className, content, isHTML) {
+      const b = document.createElement('div');
+      b.className = 'imsg-bubble ' + className;
+      if (isHTML) b.innerHTML = content; else b.textContent = content;
+      b.style.opacity = '0';
+      b.style.transform = 'translateY(10px)';
+      b.style.transition = 'opacity 260ms ease, transform 260ms ease';
+      imsgMessages.appendChild(b);
+      b.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        b.style.opacity = '1';
+        b.style.transform = 'translateY(0)';
+      }));
+      return b;
+    }
+
+    imsgSend.addEventListener('click', () => {
+      if (imsgSend.classList.contains('sent')) return;
+      imsgSend.classList.add('sent');
+      imsgInput.classList.add('sent');
+
+      if (sendPhase === 0) {
+        track('message_send_button_click', { message_sent: 'tell me more' });
+        imsgInput.textContent = 'iMessage';
+        addBubble('imsg-blue', 'tell me more', false);
+        setTimeout(() => {
+          addBubble('imsg-gray', "I've built products end-to-end across consumer and enterprise software on mobile / web / desktop.<br><br>I enjoy photography, reading sociology and startup books, producing hip-hop music, and building side projects that are as beautiful as they are functional.", true);
+          setTimeout(() => {
+            sendPhase = 1;
+            imsgInput.textContent = 'cool, can I see some of your work?';
+            imsgInput.classList.remove('sent');
+            imsgSend.classList.remove('sent');
+          }, 1200);
+        }, 900);
+
+      } else if (sendPhase === 1) {
+        track('message_send_button_click', { message_sent: 'can I see your work' });
+        imsgInput.textContent = 'iMessage';
+        addBubble('imsg-blue', 'cool, can I see some of your work?', false);
+        setTimeout(() => {
+          addBubble('imsg-gray', 'Sure. Here are some of <a href="photos.html" style="color:#007AFF;text-decoration:none;">my photos</a>. I built <a href="https://github.com/Roberra0/flow_timer" target="_blank" style="color:#007AFF;text-decoration:none;">Rythm + Flow</a>, a pomodoro timer. I also designed and built this website.', true);
+          setTimeout(enableOverlayClose, 1200);
+        }, 900);
+      }
+    });
+
+    // ── App icon click handlers ──
+    document.querySelectorAll('.app-icon').forEach(icon => {
+      icon.style.cursor = 'pointer';
+      icon.addEventListener('click', () => {
+        if (icon === msgIcon) {
+          enterMessageState();
+        } else {
+          const label = icon.querySelector('img').alt;
+          if (label === 'Resume') {
+            track('resume_icon_click', { destination: 'cv.html' });
+            window.location.href = 'cv.html';
+          } else if (label === 'GitHub') {
+            track('github_icon_click', { destination: 'github.com/roberra0' });
+            window.open('https://github.com/roberra0', '_blank');
+          } else if (label === 'Photos') {
+            track('photos_icon_click', { destination: 'photos.html' });
+            window.location.href = 'photos.html';
+          }
+        }
+      });
+    });
+    // ── Jump to end state if #end hash is present ──
+    if (location.hash === '#end') {
+      card.style.width = END_WIDTH + 'px';
+      avatar.style.left      = AVATAR_END_X + 'px';
+      avatar.style.top       = '50%';
+      avatar.style.transform = 'translateY(-50%) scaleX(-1)';
+      avatar.style.filter    = 'drop-shadow(0px 4px 4px rgba(0,0,0,0.25))';
+      callBtn.style.visibility   = 'hidden';
+      textGroup.style.visibility = 'hidden';
+      appIcons.style.transition    = 'none';
+      appIcons.style.opacity       = '1';
+      appIcons.style.pointerEvents = 'auto';
+      endArrow.style.transition    = 'none';
+      endArrow.style.opacity       = '1';
+      endArrow.style.pointerEvents = 'auto';
+      speechBubble.style.transition = 'none';
+      speechBubble.style.opacity    = '1';
+      history.replaceState(null, '', location.pathname); // clean up hash
+      inEndState = true;
+    }
+  </script>
+
+</body>
+</html>

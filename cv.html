@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Roberra Aklilu — CV</title>
+  <meta name="description" content="Principal Product Manager">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCCGP9K8G5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BCCGP9K8G5');
+    // Active time tracking
+    let activeMs = 0, lastActive = Date.now();
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { activeMs += Date.now() - lastActive; }
+      else { lastActive = Date.now(); }
+    });
+    window.addEventListener('beforeunload', () => {
+      if (!document.hidden) activeMs += Date.now() - lastActive;
+      gtag('event', 'time_on_page', { active_ms: activeMs, page: 'cv', timestamp_ms: Date.now() });
+    });
+  </script>
+
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-weight: 500;
+      font-display: block;
+      font-style: normal;
+      src: url("https://kons.fyi/fonts/inter.woff2") format("woff2");
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F2EDE4;
+      --ink: #1a1917;
+      --ink-2: #6b6860;
+      --ink-3: #9e9b96;
+      --border: rgba(26,25,23,0.09);
+      --radius-logo: 7px;
+    }
+
+    /* Grain overlay */
+    html {
+      background-color: var(--bg);
+      min-height: 100%;
+    }
+    html::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 250px 250px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      font-weight: 500;
+      background: transparent;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+
+    /* ── Header ── */
+    .profile-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 52px;
+    }
+
+    .profile-photo-wrap {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 4px 16px rgba(0,0,0,0.07);
+    }
+    .profile-photo {
+      width: 135px;
+      height: 135px;
+      object-fit: cover;
+      object-position: center 30%;
+      margin-left: -22px;
+      margin-top: -20px;
+    }
+
+    .profile-info { display: flex; flex-direction: column; gap: 2px; padding-top: 4px; }
+
+    .profile-name {
+      font-size: 20px;
+      letter-spacing: -0.3px;
+      color: var(--ink);
+    }
+
+    .profile-title {
+      font-size: 14px;
+      color: var(--ink-2);
+    }
+
+    .profile-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 13px;
+      color: var(--ink-2);
+      text-decoration: none;
+      margin-top: 6px;
+    }
+    .profile-link:hover { color: var(--ink); }
+    .profile-link svg { opacity: 0.5; }
+
+    /* ── Sections ── */
+    .section { margin-bottom: 48px; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Experience entry ── */
+    .entry {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 0 24px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .entry:last-child { border-bottom: none; }
+
+    .entry-date {
+      font-size: 12px;
+      color: var(--ink-3);
+      padding-top: 3px;
+      white-space: nowrap;
+    }
+
+    .entry-content { display: flex; flex-direction: column; gap: 6px; }
+
+    .entry-title-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Company logo badge */
+    .logo {
+      width: 20px;
+      height: 20px;
+      border-radius: 5px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .entry-role {
+      font-size: 14px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .entry-role a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .entry-role a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .entry-desc {
+      font-size: 13px;
+      color: var(--ink-2);
+      line-height: 1.6;
+    }
+
+    .entry-tags {
+      font-size: 11px;
+      color: var(--ink-3);
+      line-height: 1.9;
+    }
+
+    /* ── Education entry (same grid) ── */
+    .edu-degree {
+      font-size: 14px;
+      color: var(--ink);
+    }
+    .edu-field {
+      font-size: 13px;
+      color: var(--ink-2);
+    }
+
+    /* ── Back link ── */
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 400;
+      color: #0A84FF;
+      text-decoration: none;
+      margin-bottom: 48px;
+    }
+    .back:hover { opacity: 0.7; }
+
+    @media (max-width: 480px) {
+      .page { padding: 40px 16px 72px; }
+      .entry { grid-template-columns: 80px 1fr; gap: 0 16px; }
+      .profile-header { gap: 16px; }
+      .profile-photo-wrap { width: 56px; height: 56px; }
+      .profile-photo { width: 112px; height: 112px; margin-left: -28px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <a href="call-card.html#end" class="back">
+      <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 1.5L1.5 8L8.5 14.5" stroke="#0A84FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back
+    </a>
+
+    <!-- Profile header -->
+    <div class="profile-header">
+      <div class="profile-photo-wrap"><img class="profile-photo" src="headshot.png" alt="Roberra Aklilu"></div>
+      <div class="profile-info">
+        <div class="profile-name">Roberra Aklilu</div>
+        <div class="profile-title">Principal Product Manager</div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <section class="section">
+      <div class="section-label">Education</div>
+
+      <div class="entry">
+        <div class="entry-date">2018 — 2020</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #011F5B;"></span>
+            <span class="edu-degree">The Wharton School, University of Pennsylvania</span>
+          </div>
+          <div class="edu-field">M.B.A. — Finance, Entrepreneurship &amp; Innovation</div>
+          <div class="entry-tags">GMAT top 7% · Joseph Wharton Fellow · Photography Club President</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">2009 — 2013</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #00539F;"></span>
+            <span class="edu-degree">Villanova University</span>
+          </div>
+          <div class="edu-field">B.S. — Computer Science</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Experience -->
+    <section class="section">
+      <div class="section-label">Experience</div>
+
+      <div class="entry">
+        <div class="entry-date">2021 — Now</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #E1251B;"></span>
+            <span class="entry-role">Principal Product Manager @ Adobe</span>
+          </div>
+          <div class="entry-desc">Constructing customer centric user journeys across the Creative Cloud. Products: Photoshop Web (0→1), Photoshop Mobile (0→1), Photoshop Desktop, and Firefly Boards (0→1).</div>
+          <div class="entry-tags">Customer Research · Feature Adoption · Freemium · Generative AI · Onboarding · Problem Discovery · Product Market Fit · Trial Conversion · Generative Fill · AI features</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">2020 — 2021</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #607078;"></span>
+            <span class="entry-role">Sr. Associate @ VMware's Corporate Venture Fund</span>
+          </div>
+          <div class="entry-desc">Built product strategy for business units &amp; led strategic VC investments and partnerships with numerous startups.</div>
+          <div class="entry-tags">5G Infrastructure · Endpoint Security · Hybrid/Multi-Cloud · SD-WAN · SASE · Telco Cloud · Virtualization</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">2020</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #3B82F6;"></span>
+            <span class="entry-role">Entrepreneur-in-Residence @ FedTech</span>
+          </div>
+          <div class="entry-desc">Ran rapid 0→1 research for an IoT startup to discover product market fit across industrial and manufacturing verticals, including hydropower plants and steel mills.</div>
+          <div class="entry-tags">Hydropower · Industrial Control Systems · Infrastructure Technology · IoT · PMF · Predictive Analytics · Steel Manufacturing</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">2019</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #FF9900;"></span>
+            <span class="entry-role">Sr. Technical Product Manager @ Amazon Web Services</span>
+          </div>
+          <div class="entry-desc">Identified high churn in network-attached storage and EC2 offerings, identified root cause through customer interviews, developed build/buy/partner analysis to deliver competitive solution.</div>
+          <div class="entry-tags">Block/File/Object Storage · Cloud Storage · IOPS · Scale Up/Out Servers · Throughput</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">2016 — 2018</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #2D6A4F;"></span>
+            <span class="entry-role">VC Analyst @ Osage University Partners (Venture fund)</span>
+          </div>
+          <div class="entry-desc">Distilled scientific research papers, customer &amp; technical calls, and market research to make investment decisions for deeptech startups.</div>
+          <div class="entry-tags">Financial Metrics · Market Sizing · PMF Validation · Product Metrics · Scientific Research Analysis · Technical Diligence</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">2013 — 2016</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #86BC25;"></span>
+            <span class="entry-role">Lead Product Manager @ Deloitte Consulting</span>
+          </div>
+          <div class="entry-desc">Led team of consultants and engineers to build, ship and maintain 3 custom large-scale (4M MAU) multi-sided enterprise products from 0→1.</div>
+          <div class="entry-tags">Government/Civic Tech · Healthcare · User Workflow Reengineering</div>
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-date">2012</div>
+        <div class="entry-content">
+          <div class="entry-title-row">
+            <span class="logo" style="background: #822433;"></span>
+            <span class="entry-role">Software Engineer @ Vanguard</span>
+          </div>
+          <div class="entry-desc">Built and integrated data warehouse infrastructure and pipelines to improve data availability for portfolio managers.</div>
+          <div class="entry-tags">Data Warehousing · Financial Services · Software Engineering · Enterprise Infrastructure</div>
+        </div>
+      </div>
+
+    </section>
+
+
+  </div>
+</body>
+</html>

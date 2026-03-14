@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photos</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BCCGP9K8G5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-BCCGP9K8G5');
+    // Active time tracking
+    let activeMs = 0, lastActive = Date.now();
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { activeMs += Date.now() - lastActive; }
+      else { lastActive = Date.now(); }
+    });
+    window.addEventListener('beforeunload', () => {
+      if (!document.hidden) activeMs += Date.now() - lastActive;
+      gtag('event', 'time_on_page', { active_ms: activeMs, page: 'photos', timestamp_ms: Date.now() });
+    });
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .topbar-title {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .topbar-back {
+      font-size: 16px;
+      font-weight: 400;
+      color: #0A84FF;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      padding: 22px 20px 10px;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    /* ── PHOTO GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      padding: 0 0 40px;
+    }
+    .grid-item {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      cursor: pointer;
+      background: #1c1c1e;
+    }
+    .grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 200ms ease;
+    }
+    .grid-item:hover img { transform: scale(1.04); }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-size: 30px;
+      color: #fff;
+      cursor: pointer;
+      opacity: 0.7;
+      line-height: 1;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-caption {
+      margin-top: 16px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <a href="call-card.html#end" class="topbar-back">
+      <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.5 1.5L1.5 8L8.5 14.5" stroke="#0A84FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back
+    </a>
+    <span class="topbar-title">Photos</span>
+  </div>
+
+  <div class="section-label">Recents</div>
+
+  <div class="grid" id="grid"></div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lbClose">&times;</span>
+    <img id="lbImg" src="" alt="">
+    <div class="lightbox-caption" id="lbCaption"></div>
+  </div>
+
+  <script>
+    const photos = [
+      { src: 'photos/1BTDjliomJ5.jpg',  label: '' },
+      { src: 'photos/1RY6hBLLYL0.jpg',  label: '' },
+      { src: 'photos/2L17RMUrqk3.jpg',  label: '' },
+      { src: 'photos/2MiELg61F54.jpg',  label: '' },
+      { src: 'photos/2RakC3VRsXd.jpg',  label: '' },
+      { src: 'photos/2bRrlJBbPGy.jpg',  label: '' },
+      { src: 'photos/2ip7jIxDETq.jpg',  label: '' },
+      { src: 'photos/34xMLrn8XyT.jpg',  label: '' },
+      { src: 'photos/3768accEQ46.jpg',  label: '' },
+      { src: 'photos/3U36ZqBOFwf.jpg',  label: '' },
+      { src: 'photos/3bSSXnu0LgX.jpg',  label: '' },
+      { src: 'photos/3jhmRuFK4WI.jpg',  label: '' },
+      { src: 'photos/3yBDmd8Ozo3.jpg',  label: '' },
+      { src: 'photos/43SDRkiDKoQ.jpg',  label: '' },
+      { src: 'photos/4A1KE5kCOJ3.jpg',  label: '' },
+      { src: 'photos/4U37XoVgr4L.jpg',  label: '' },
+      { src: 'photos/4jHKUGBKMW9.jpg',  label: '' },
+      { src: 'photos/4le78UyAl4k.jpg',  label: '' },
+      { src: 'photos/52ixx204dQ.jpg',   label: '' },
+      { src: 'photos/58gsvpL79gv.jpg',  label: '' },
+      { src: 'photos/5Ubgzt7aSvH.jpg',  label: '' },
+      { src: 'photos/5YKrpkfiaQG.jpg',  label: '' },
+      { src: 'photos/5eO0YR2mbLA.jpg',  label: '' },
+      { src: 'photos/5ij9uLwselJ.jpg',  label: '' },
+      { src: 'photos/5oDlwMTZRBz.jpg',  label: '' },
+      { src: 'photos/6CVzKC5bCPB.jpg',  label: '' },
+      { src: 'photos/6GOKkBkrj95.jpg',  label: '' },
+      { src: 'photos/6M4rdWKkNfK.jpg',  label: '' },
+      { src: 'photos/6NkZ5vilMFi.jpg',  label: '' },
+      { src: 'photos/6mgQVUv72fI.jpg',  label: '' },
+      { src: 'photos/6uGFOZXm1z6.jpg',  label: '' },
+      { src: 'photos/79Dag2yiDpg.jpg',  label: '' },
+      { src: 'photos/7OjAl7Crmu8.jpg',  label: '' },
+      { src: 'photos/7mw00qYKucr.jpg',  label: '' },
+      { src: 'photos/7o92u2GTZ3x.jpg',  label: '' },
+      { src: 'photos/7tgDeYGoN5A.jpg',  label: '' },
+      { src: 'photos/81jDmtJgJvL.jpg',  label: '' },
+      { src: 'photos/8BN3VrEk1LV.jpg',  label: '' },
+      { src: 'photos/8LP8ZX8rbqo.jpg',  label: '' },
+      { src: 'photos/8OcRl93glfR.jpg',  label: '' },
+      { src: 'photos/8oo4EpEvh86.jpg',  label: '' },
+      { src: 'photos/8vs49Gvi3oE.jpg',  label: '' },
+      { src: 'photos/91PYSUt7yVq.jpg',  label: '' },
+      { src: 'photos/97xa0QMsCBJ.jpg',  label: '' },
+      { src: 'photos/9M7pGjtMhfM.jpg',  label: '' },
+      { src: 'photos/9ManV5Hq2wi.jpg',  label: '' },
+      { src: 'photos/9l1RKN9iUb9.jpg',  label: '' },
+      { src: 'photos/CowoKCkk6P.jpg',   label: '' },
+      { src: 'photos/Pq5rDVeTxQ.jpg',   label: '' },
+      { src: 'photos/SzbrO9tvvZ.jpg',   label: '' },
+      { src: 'photos/aM1PdVp5xhE.jpg',  label: '' },
+      { src: 'photos/aVHQn8qppAW.jpg',  label: '' },
+      { src: 'photos/alDFUOpQ06p.jpg',  label: '' },
+      { src: 'photos/ayHX6KpAp32.jpg',  label: '' },
+      { src: 'photos/f0WKrdKY3n.jpg',   label: '' },
+      { src: 'photos/yMQkOTnHbF.jpg',   label: '' },
+    ];
+
+    const grid     = document.getElementById('grid');
+    const lightbox = document.getElementById('lightbox');
+    const lbImg    = document.getElementById('lbImg');
+    const lbCaption = document.getElementById('lbCaption');
+    const lbClose  = document.getElementById('lbClose');
+
+    photos.forEach(p => {
+      const item = document.createElement('div');
+      item.className = 'grid-item';
+      const img = document.createElement('img');
+      img.src = p.src;
+      img.alt = p.label;
+      img.loading = 'lazy';
+      item.appendChild(img);
+      item.addEventListener('click', () => {
+        lbImg.src = p.src;
+        lbCaption.textContent = p.label;
+        lightbox.classList.add('open');
+      });
+      grid.appendChild(item);
+    });
+
+    lbClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) lightbox.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>
