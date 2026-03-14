@@ -10,6 +10,10 @@ HTML, CSS, vanilla JS. No-framework interactive website that feels like a native
 
 ![Closed state](screenshots/closed%20state.png)
 
+**Blur / transition** — horizontal motion blur mid-expansion as the memoji and call button cross paths.
+
+![Blur state](screenshots/blur%20state.png)
+
 **Open state** — tap the phone and the card expands (with motion blur) revealing your links.
 
 ![Open state](screenshots/open_state.png)
