@@ -1,6 +1,6 @@
 # Interactive iOS Inspired Personal Website Template
 
-HTML, CSS, vanilla JS. No-framework interactive website that feels like a native app. Fork it, swap in your info, and ship it.
+HTML, CSS, vanilla JS. No-framework interactive website that feels like a native app. Mobile optimized. Fork it, swap in your info, and ship it.
 
 ---
 

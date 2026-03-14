@@ -229,7 +229,14 @@
       .entry { grid-template-columns: 80px 1fr; gap: 0 16px; }
       .profile-header { gap: 16px; }
       .profile-photo-wrap { width: 56px; height: 56px; }
-      .profile-photo { width: 112px; height: 112px; margin-left: -28px; }
+      .profile-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 20%;
+        margin-left: 0;
+        margin-top: 0;
+      }
     }
   </style>
 </head>

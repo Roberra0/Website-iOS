@@ -400,6 +400,30 @@
     }
     .imsg-send:hover { opacity: 0.85; }
     .imsg-send.sent { pointer-events: none; opacity: 0.4; }
+
+    /* ── MOBILE OVERRIDES (≤600px) ── */
+    @media (max-width: 600px) {
+      body { overflow: hidden; }
+      .card {
+        transform-origin: center center;
+        transform: scale(var(--mobile-scale, 1));
+      }
+      .imsg-window {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+      }
+      /* Hide speech bubble */
+      .speech-bubble { display: none; }
+      /* Hide memoji in end state — icons take full width */
+      .card.end-state .avatar { opacity: 0; pointer-events: none; }
+      /* Icons fill space to right edge, right-aligned, wider gaps */
+      .card.end-state .app-icons { right: 14px; justify-content: flex-end; gap: 22px; }
+      /* Disable hover-expand labels — no hover on touch */
+      .app-icon-label { display: none !important; }
+      .app-icon:hover { background: transparent; gap: 0; padding-right: 4px; }
+    }
   </style>
 
   <!-- Directional (horizontal) blur filter -->
@@ -528,6 +552,13 @@ const hblurKernel     = document.getElementById('hblur-kernel');
     const CALL_X       = START_WIDTH - 88 - 10; // 272 — call button left in start state
     const AVATAR_END_X = 501;                    // memoji rests near right edge in end state
 
+    // ── Mobile scale ──
+    const isMobile = window.innerWidth <= 600;
+    const MOBILE_SCALE = isMobile ? (window.innerWidth - 24) / END_WIDTH : 1;
+    if (isMobile) {
+      document.documentElement.style.setProperty('--mobile-scale', MOBILE_SCALE);
+    }
+
     // ── Analytics helper ──
     function track(event_name, params) {
       if (typeof gtag === 'undefined') return;
@@ -617,6 +648,7 @@ const hblurKernel     = document.getElementById('hblur-kernel');
           speechBubble.style.opacity    = '1';
 
           avatar.style.cursor = 'pointer';
+          card.classList.add('end-state');
           running = false;
           inEndState = true;
         }
@@ -630,6 +662,9 @@ const hblurKernel     = document.getElementById('hblur-kernel');
       if (running || !inEndState) return;
       running = true;
       track('back_arrow_click', { from_state: 'end' });
+
+      card.classList.remove('end-state');
+      avatar.style.opacity = '1';
 
       // Fade out icons + arrow instantly
       appIcons.style.transition = 'opacity 150ms ease';
@@ -904,6 +939,7 @@ const hblurKernel     = document.getElementById('hblur-kernel');
       speechBubble.style.opacity    = '1';
       history.replaceState(null, '', location.pathname); // clean up hash
       avatar.style.cursor = 'pointer';
+      card.classList.add('end-state');
       inEndState = true;
     }
   </script>
