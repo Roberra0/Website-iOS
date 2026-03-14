@@ -26,7 +26,7 @@ HTML, CSS, vanilla JS. No-framework interactive website that feels like a native
 
 **Icon hover expand** — each app icon pill slides open a label on hover. Pure CSS.
 
-![Icon hover](screenshots/open_state_message%20expanded.png)
+![Icon hover](screenshots/open_state_message_expanded.png)
 
 **iMessage overlay** — tap Messages to open a scripted conversation introducing yourself.
 
