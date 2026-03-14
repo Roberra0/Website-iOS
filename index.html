@@ -420,6 +420,8 @@
       .card.end-state .avatar { opacity: 0; pointer-events: none; }
       /* Icons fill space to right edge, right-aligned, wider gaps */
       .card.end-state .app-icons { right: 14px; justify-content: flex-end; gap: 22px; }
+      /* Remove CSS drop-shadow on img — WebKit doesn't clip filter to overflow:hidden circle */
+      .app-icon-clip img { filter: none; }
       /* Disable hover-expand labels — no hover on touch */
       .app-icon-label { display: none !important; }
       .app-icon:hover { background: transparent; gap: 0; padding-right: 4px; }
