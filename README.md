@@ -58,7 +58,7 @@ The résumé page has a subtle film grain overlay rendered via an inline SVG `fe
 
 | Page | File | Description |
 |------|------|-------------|
-| iMessage Card | `call-card.html` | Fun imessage way to share you're "About me" |
+| iMessage Card | `index.html` | Code for the closed state where there is a phone ringing, and open state where the message, resume, photos, and github icon are |
 | Resume | `cv.html` | Clean, typographic resume with headshot |
 | Photos/Portfolio | `photos.html` | Fullscreen photo grid with lightbox, not into photography? Swap this with your portfolio, or favorite books|
 
@@ -75,7 +75,7 @@ The résumé page has a subtle film grain overlay rendered via an inline SVG `fe
 5. **Wire up analytics** — GA4 is already plumbed in, just swap your measurement ID
 6. **Deploy** — static files, works on GitHub Pages, Netlify, Vercel, or any CDN
 
-No npm install. No build step. Open `call-card.html` in a browser and it works.
+No npm install. No build step. Open `index.html` in a browser and it works.
 
 ---
 
@@ -84,7 +84,6 @@ No npm install. No build step. Open `call-card.html` in a browser and it works.
 - Vanilla HTML/CSS/JS — no frameworks, no dependencies
 - SVG filters for directional blur (`feGaussianBlur`) and film grain (`feTurbulence`)
 - `requestAnimationFrame` loops for all card transitions
-- [Tailwind CSS CDN](https://tailwindcss.com) — used in `index.html`
 - `@dotlottie/player-component` — Lottie animations on the home/about/links buttons
 - Google Analytics 4 with active-time tracking
 
@@ -94,7 +93,7 @@ No npm install. No build step. Open `call-card.html` in a browser and it works.
 
 ```
 /
-├── call-card.html        # Main interactive card (start here)
+├── index.html        # Main interactive card (start here)
 ├── cv.html               # Résumé page
 ├── photos.html           # Photo gallery
 ├── headshot.png          # Profile photo used in cv.html

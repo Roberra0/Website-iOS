@@ -4,62 +4,67 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal portfolio site — a collection of standalone HTML files. No build system, no framework, no package.json. Files are opened directly in a browser or served statically.
+Personal portfolio site — standalone HTML files, no build system, no framework, no package.json.
 
-- `index.html` — interactive "dynamic island" card (the main entry point). Uses a state machine (`start → home → about/links`) with animated transitions driven by vanilla JS.
-- `cv.html` — résumé/CV page with Google Analytics 4 active-time tracking.
-- `card.html`, `call-card.html` — alternate card layouts.
-- `photos.html` — photo gallery.
+**Current files at root:**
+- `index.html` — iOS-style incoming call card animation (main entry point)
+- `cv.html` — résumé/CV page with Google Analytics 4 active-time tracking
+- `photos.html` — photo gallery, iOS Photos app aesthetic (dark, `#000` bg)
+
+**Reference materials (`_reference/`):**
+- `index.html` — reference design for a "dynamic island" card (Tailwind-based)
+- `notes.md` — Claude Code project notes
+- `resume.txt`, PDF — CV content source
+- `icons/`, `books/` — asset sources
+
+**Assets at root:**
+- `icons/` — SVG and PNG icons used by pages
+- `photos/` — photo assets for `photos.html`
+- `headshot.png`, `icons/memoji.png` — profile images
+- `screenshots/` — reference screenshots for design comparison
 
 ## Technical Patterns
 
-- **Tailwind CSS via CDN** with an inline `tailwind.config` block for custom tokens (colors, spacing, border-radius, transition durations).
-- **Custom CSS** for pseudo-element icons (SVG data URIs embedded in `before:bg-*` utility classes), media-query breakpoints not covered by Tailwind, and selection colors.
-- **Lottie animations** via `@dotlottie/player-component` + `@lottiefiles/lottie-interactivity` loaded from jsDelivr CDN.
-- **No external CSS files** — all styles are inline in each HTML file.
+### Existing pages (`index.html`, `cv.html`, `photos.html`)
+- Pure vanilla CSS — no Tailwind. Custom CSS properties (CSS vars) for theming.
+- Font: Inter loaded from `https://kons.fyi/fonts/inter.woff2`
+- GA4 tracking on all pages (`G-BCCGP9K8G5`). `cv.html` and `photos.html` also fire a `time_on_page` event with active milliseconds on unload.
+- All styles inline in each HTML file — no external CSS.
+
+### `index.html` states
+- **Closed** (`screenshots/closed state.png`) — pill-shaped card (370px wide) with memoji left, name + email center, green call button right.
+- **Blur** (`screenshots/blur state.png`) — mid-transition frame: memoji and call button cross horizontally with a directional (horizontal-only) motion blur applied via an SVG `feGaussianBlur` filter. Card stretches during travel.
+- **Open** (`screenshots/open_state.png`) — expanded card (595px wide) with back arrow left, app icon row center, memoji flipped right. Speech bubble appears above memoji.
+- **Message** (`screenshots/imessage.png`, `screenshots/open_state_message_expanded.png`) — iMessage overlay fades in over the card; conversation with send phases.
+
+### Reference design (`_reference/index.html`)
+- **Tailwind CSS via CDN** with an inline `tailwind.config` block for custom tokens (colors, spacing, border-radius, transition durations)
+- Custom CSS pseudo-element icons using SVG data URIs in `before:bg-*` utility classes
+- State machine: `start → home → about/links` with animated transitions (vanilla JS)
+- Lottie animations via `@dotlottie/player-component` + `@lottiefiles/lottie-interactivity` from jsDelivr CDN
+- Assets reference `https://kons.fyi/` (font, background image)
 
 ## Viewing / Testing
 
-Open any file directly in a browser:
 ```
-open index.html
-```
-
-Or serve locally (avoids CORS issues with fonts/assets):
-```
-npx serve .
+open cv.html          # open directly
+npx serve .           # serve locally (avoids CORS for fonts/assets)
 ```
 
 ## Website Design Recreation Workflow
 
-When the user provides a reference image (screenshot) and optionally some CSS classes or style notes:
+When building/iterating on a page from a reference image or `_reference/` file:
 
-1. **Generate** a single `index.html` file using Tailwind CSS (via CDN). Include all content inline — no external files unless requested.
-2. **Screenshot** the rendered page using Puppeteer (`npx puppeteer screenshot index.html --fullpage` or equivalent). If the page has distinct sections, capture those individually too.
-3. **Compare** your screenshot against the reference image. Check for mismatches in:
-   - Spacing and padding (measure in px)
-   - Font sizes, weights, and line heights
-   - Colors (exact hex values)
-   - Alignment and positioning
-   - Border radii, shadows, and effects
-   - Responsive behavior
-   - Image/icon sizing and placement
-4. **Fix** every mismatch found. Edit the HTML/Tailwind code.
-5. **Re-screenshot** and compare again.
-6. **Repeat** steps 3–5 until the result is within ~2–3px of the reference everywhere.
+1. **Generate** HTML inline — all styles in `<style>`, no external CSS files.
+2. **Screenshot** with Puppeteer (`npx puppeteer screenshot <file> --fullpage`).
+3. **Compare** against the reference. Check: spacing/padding (px), font sizes/weights, colors (exact hex), alignment, border radii, shadows, image sizing.
+4. **Fix** every mismatch found.
+5. **Re-screenshot** and repeat until no visible differences remain (target: within ~2–3px).
 
-Do NOT stop after one pass. Always do at least 2 comparison rounds. Only stop when the user says so or when no visible differences remain.
-
-## Technical Defaults
-
-- Use Tailwind CSS via CDN (`<script src="https://cdn.tailwindcss.com"></script>`)
-- Use placeholder images from `https://placehold.co/` when source images aren't provided
-- Mobile-first responsive design
-- Single `index.html` file unless the user requests otherwise
+Always do at least 2 comparison rounds before stopping.
 
 ## Rules
-- Do not add features, sections, or content not present in the reference image
-- Match the reference exactly — do not "improve" the design
+- Match the reference exactly — do not add features or "improve" the design
 - If the user provides CSS classes or style tokens, use them verbatim
-- Keep code clean but don't over-abstract — inline Tailwind classes are fine
-- When comparing screenshots, be specific about what's wrong (e.g., "heading is 32px but reference shows ~24px", "gap between cards is 16px but should be 24px")
+- When comparing screenshots, be specific (e.g. "heading is 32px but reference shows ~24px")
+- Keep all styles inline in each HTML file
