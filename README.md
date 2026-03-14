@@ -4,16 +4,6 @@ HTML, CSS, vanilla JS. No-framework interactive website that feels like a native
 
 ---
 
-## Pages
-
-| Page | File | Description |
-|------|------|-------------|
-| iMessage Card | `call-card.html` | Fun imessage way to share you're "About me" |
-| Resume | `cv.html` | Clean, typographic resume with headshot |
-| Photos/Portfolio | `photos.html` | Fullscreen photo grid with lightbox, not into photography? Swap this with your portfolio, or favorite books|
-
----
-
 ## Screenshots
 
 **Closed state** — a compact pill with your memoji, name, and a ringing phone button.
@@ -64,10 +54,19 @@ The résumé page has a subtle film grain overlay rendered via an inline SVG `fe
 
 ---
 
+## Pages
+
+| Page | File | Description |
+|------|------|-------------|
+| iMessage Card | `call-card.html` | Fun imessage way to share you're "About me" |
+| Resume | `cv.html` | Clean, typographic resume with headshot |
+| Photos/Portfolio | `photos.html` | Fullscreen photo grid with lightbox, not into photography? Swap this with your portfolio, or favorite books|
+
+---
 ## How to use this as your own template
 
 1. **Clone or download** the repo
-2. **Replace content** in `call-card.html`:
+2. **Replace content** in `call-card.html` or ask your agent to:
    - Swap `icons/memoji.png` with your own memoji or avatar
    - Update the name, email address, and bio text in the iMessage flow
    - Point the app icon links to your own Resume, GitHub, Photos pages
