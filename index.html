@@ -401,6 +401,8 @@
     .imsg-send:hover { opacity: 0.85; }
     .imsg-send.sent { pointer-events: none; opacity: 0.4; }
 
+    .icon-mobile { display: none; }
+
     /* ── MOBILE OVERRIDES (≤600px) ── */
     @media (max-width: 600px) {
       body { overflow: hidden; }
@@ -420,6 +422,9 @@
       .card.end-state .avatar { opacity: 0; pointer-events: none; }
       /* Icons fill space to right edge, right-aligned, wider gaps */
       .card.end-state .app-icons { right: 14px; justify-content: flex-end; gap: 22px; }
+      /* Swap icons: hide originals, show vector replacements */
+      .icon-desktop { display: none; }
+      .icon-mobile { display: block; }
       /* Remove CSS drop-shadow on img — WebKit doesn't clip filter to overflow:hidden circle */
       .app-icon-clip img { filter: none; }
       /* Disable hover-expand labels — no hover on touch */
@@ -493,31 +498,39 @@
       </div>
       <div class="app-icon">
         <div class="app-icon-clip" data-label="Resume">
-          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-            <rect width="50" height="50" rx="12" fill="#fff"/>
-            <rect width="50" height="15" rx="12" fill="#F9CC3E"/>
-            <rect y="8" width="50" height="7" fill="#F9CC3E"/>
-            <rect x="9" y="21" width="32" height="2.5" rx="1.25" fill="#C8C8C8"/>
-            <rect x="9" y="28" width="26" height="2.5" rx="1.25" fill="#C8C8C8"/>
-            <rect x="9" y="35" width="20" height="2.5" rx="1.25" fill="#C8C8C8"/>
+          <img src="icons/notes.svg" alt="Resume" class="icon-desktop">
+          <svg class="icon-mobile" width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <defs><clipPath id="nc"><circle cx="25" cy="25" r="25"/></clipPath></defs>
+            <g clip-path="url(#nc)">
+              <rect width="50" height="50" fill="#fff"/>
+              <rect width="50" height="16" fill="#F5C133"/>
+              <rect x="7" y="21" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
+              <rect x="7" y="26" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
+              <rect x="7" y="31" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
+              <rect x="7" y="36" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
+              <rect x="7" y="41" width="24" height="1.5" rx="0.75" fill="#D2D2D2"/>
+            </g>
           </svg>
         </div>
         <span class="app-icon-label">Resume</span>
       </div>
       <div class="app-icon">
         <div class="app-icon-clip" data-label="Photos">
-          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-            <rect width="50" height="50" rx="12" fill="#fff"/>
-            <g transform="translate(25,25)">
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#F04E3E"/>
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#F98E2B" transform="rotate(45)"/>
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#F6D43B" transform="rotate(90)"/>
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#5AC85A" transform="rotate(135)"/>
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#4EB8F0" transform="rotate(180)"/>
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#2B5FC7" transform="rotate(225)"/>
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#9B59C8" transform="rotate(270)"/>
-              <ellipse cx="0" cy="-9" rx="4" ry="7" fill="#E8498A" transform="rotate(315)"/>
-              <circle cx="0" cy="0" r="5" fill="white"/>
+          <img src="icons/photos.svg" alt="Photos" class="icon-desktop">
+          <svg class="icon-mobile" width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <defs><clipPath id="pc"><circle cx="25" cy="25" r="25"/></clipPath></defs>
+            <g clip-path="url(#pc)">
+              <rect width="50" height="50" fill="#fff"/>
+              <!-- 8 petals at radius=11 from center (25,25), each r=9 -->
+              <circle cx="25"    cy="14"    r="9" fill="#5EC35E"/><!-- top -->
+              <circle cx="32.8"  cy="17.2"  r="9" fill="#F5D030"/><!-- top-right -->
+              <circle cx="36"    cy="25"    r="9" fill="#F5923E"/><!-- right -->
+              <circle cx="32.8"  cy="32.8"  r="9" fill="#F5544A"/><!-- bottom-right -->
+              <circle cx="25"    cy="36"    r="9" fill="#E8498A"/><!-- bottom -->
+              <circle cx="17.2"  cy="32.8"  r="9" fill="#9B5EC8"/><!-- bottom-left -->
+              <circle cx="14"    cy="25"    r="9" fill="#2B62D0"/><!-- left -->
+              <circle cx="17.2"  cy="17.2"  r="9" fill="#4BB8F0"/><!-- top-left -->
+              <circle cx="25"    cy="25"    r="7.5" fill="white"/>
             </g>
           </svg>
         </div>
