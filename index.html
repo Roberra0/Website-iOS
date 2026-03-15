@@ -27,7 +27,7 @@
 
     .card {
       position: relative;
-      width: 370px;
+      width: 380px;
       height: 102px;
       background: linear-gradient(180deg, #3A4572 0%, #04367F 100%);
       border-radius: 2500px;
@@ -421,7 +421,7 @@
       /* Hide memoji in end state — icons take full width */
       .card.end-state .avatar { opacity: 0; pointer-events: none; }
       /* Icons fill space to right edge, right-aligned, wider gaps */
-      .card.end-state .app-icons { right: 14px; justify-content: flex-end; gap: 22px; }
+      .card.end-state .app-icons { left: 96px; right: auto; justify-content: flex-start; gap: 22px; }
       /* Swap icons: hide originals, show vector replacements */
       .icon-desktop { display: none; }
       .icon-mobile { display: block; }
@@ -592,7 +592,7 @@ const hblurKernel     = document.getElementById('hblur-kernel');
     const blueBubble      = document.getElementById('blueBubble');
     const msgIcon         = document.getElementById('msgIcon');
 
-    const START_WIDTH  = 370;
+    const START_WIDTH  = 380;
     const END_WIDTH    = 595;
     const AVATAR_X     = 12;
     const CALL_X       = START_WIDTH - 88 - 10; // 272 — call button left in start state
