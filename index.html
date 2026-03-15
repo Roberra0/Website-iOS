@@ -407,10 +407,10 @@
     @media (max-width: 600px) {
       body { overflow: hidden; }
       .card {
-        transform-origin: center center;
-        transform: scale(var(--mobile-scale, 1));
+        zoom: var(--mobile-scale, 1);
       }
       .imsg-window {
+        zoom: calc(1 / var(--mobile-scale, 1));
         width: 100vw;
         height: 100vh;
         height: 100dvh;
