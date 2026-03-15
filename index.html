@@ -500,15 +500,22 @@
         <div class="app-icon-clip" data-label="Resume">
           <img src="icons/notes.svg" alt="Resume" class="icon-desktop">
           <svg class="icon-mobile" width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-            <defs><clipPath id="nc"><circle cx="25" cy="25" r="25"/></clipPath></defs>
+            <defs>
+              <clipPath id="nc"><rect width="50" height="50" rx="11.5"/></clipPath>
+              <radialGradient id="ng" cx="50%" cy="0%" r="100%">
+                <stop offset="0%" stop-color="#F9E040"/>
+                <stop offset="100%" stop-color="#D09010"/>
+              </radialGradient>
+            </defs>
             <g clip-path="url(#nc)">
-              <rect width="50" height="50" fill="#fff"/>
-              <rect width="50" height="16" fill="#F5C133"/>
-              <rect x="7" y="21" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
-              <rect x="7" y="26" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
-              <rect x="7" y="31" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
-              <rect x="7" y="36" width="36" height="1.5" rx="0.75" fill="#D2D2D2"/>
-              <rect x="7" y="41" width="24" height="1.5" rx="0.75" fill="#D2D2D2"/>
+              <rect width="50" height="50" fill="#FAFAFA"/>
+              <!-- yellow dome: arch shape, sides at y=17, center dips to ~y=22.5 -->
+              <path d="M0,0 L50,0 L50,17 Q25,28 0,17 Z" fill="url(#ng)"/>
+              <!-- perforated dots separator -->
+              <line x1="1.25" y1="21" x2="48.75" y2="21" stroke="#C0C0C0" stroke-width="2.2" stroke-dasharray="0.001,2.5" stroke-linecap="round"/>
+              <!-- ruled lines -->
+              <line x1="0" y1="31" x2="50" y2="31" stroke="#D4D4D4" stroke-width="1.2"/>
+              <line x1="0" y1="41" x2="50" y2="41" stroke="#D4D4D4" stroke-width="1.2"/>
             </g>
           </svg>
         </div>
@@ -518,19 +525,19 @@
         <div class="app-icon-clip" data-label="Photos">
           <img src="icons/photos.svg" alt="Photos" class="icon-desktop">
           <svg class="icon-mobile" width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-            <defs><clipPath id="pc"><circle cx="25" cy="25" r="25"/></clipPath></defs>
+            <defs><clipPath id="pc"><rect width="50" height="50" rx="11.5"/></clipPath></defs>
             <g clip-path="url(#pc)">
               <rect width="50" height="50" fill="#fff"/>
-              <!-- 8 petals at radius=11 from center (25,25), each r=9 -->
-              <circle cx="25"    cy="14"    r="9" fill="#5EC35E"/><!-- top -->
-              <circle cx="32.8"  cy="17.2"  r="9" fill="#F5D030"/><!-- top-right -->
-              <circle cx="36"    cy="25"    r="9" fill="#F5923E"/><!-- right -->
-              <circle cx="32.8"  cy="32.8"  r="9" fill="#F5544A"/><!-- bottom-right -->
-              <circle cx="25"    cy="36"    r="9" fill="#E8498A"/><!-- bottom -->
-              <circle cx="17.2"  cy="32.8"  r="9" fill="#9B5EC8"/><!-- bottom-left -->
-              <circle cx="14"    cy="25"    r="9" fill="#2B62D0"/><!-- left -->
-              <circle cx="17.2"  cy="17.2"  r="9" fill="#4BB8F0"/><!-- top-left -->
-              <circle cx="25"    cy="25"    r="7.5" fill="white"/>
+              <!-- 8 petals with multiply blending for correct color overlap mixing -->
+              <circle cx="25"   cy="15"   r="11" fill="#78CC50" style="mix-blend-mode:multiply"/><!-- green top -->
+              <circle cx="32.1" cy="17.9" r="11" fill="#C8E848" style="mix-blend-mode:multiply"/><!-- chartreuse -->
+              <circle cx="35"   cy="25"   r="11" fill="#F0DC40" style="mix-blend-mode:multiply"/><!-- yellow -->
+              <circle cx="32.1" cy="32.1" r="11" fill="#F09040" style="mix-blend-mode:multiply"/><!-- orange -->
+              <circle cx="25"   cy="35"   r="11" fill="#E83838" style="mix-blend-mode:multiply"/><!-- red -->
+              <circle cx="17.9" cy="32.1" r="11" fill="#DC48A0" style="mix-blend-mode:multiply"/><!-- pink -->
+              <circle cx="15"   cy="25"   r="11" fill="#9060C8" style="mix-blend-mode:multiply"/><!-- purple -->
+              <circle cx="17.9" cy="17.9" r="11" fill="#88A8E0" style="mix-blend-mode:multiply"/><!-- periwinkle -->
+              <circle cx="25"   cy="25"   r="6.5" fill="white"/>
             </g>
           </svg>
         </div>
