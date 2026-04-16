@@ -28,7 +28,7 @@ Personal portfolio site — standalone HTML files, no build system, no framework
 ### Existing pages (`index.html`, `cv.html`, `photos.html`)
 - Pure vanilla CSS — no Tailwind. Custom CSS properties (CSS vars) for theming.
 - Font: Inter loaded from `https://kons.fyi/fonts/inter.woff2`
-- GA4 tracking on all pages (`G-BCCGP9K8G5`). `cv.html` and `photos.html` also fire a `time_on_page` event with active milliseconds on unload.
+- PostHog analytics on all pages (`phc_w6WbtcM7SM3HzPoSW5VDQbYwW7FW6gxun3d32HGkeUi8`). All pages fire a `time_on_page` event with active milliseconds on unload.
 - All styles inline in each HTML file — no external CSS.
 
 ### `index.html` states
