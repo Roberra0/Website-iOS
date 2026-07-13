@@ -114,6 +114,14 @@
       color: var(--ink-2);
     }
 
+    .profile-email {
+      font-size: 12px;
+      color: var(--ink-3);
+      text-decoration: none;
+      margin-top: 1px;
+    }
+    .profile-email:hover { color: var(--ink-2); }
+
     .profile-link {
       display: inline-flex;
       align-items: center;
@@ -254,9 +262,12 @@
     <div class="profile-header">
       <div class="profile-photo-wrap"><img class="profile-photo" src="headshot.png" alt="Roberra Aklilu"></div>
       <div class="profile-info">
-        <div class="profile-name">Roberra Aklilu</div>
-        <div class="profile-title" style="font-size:11px; color: var(--ink-3); margin-bottom: 2px;">row-bear-uh</div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="profile-name">Roberra Aklilu</div>
+          <div class="profile-title" style="font-size:11px; color: var(--ink-3); font-style: italic;">row-bear-uh</div>
+        </div>
         <div class="profile-title">Principal Product Manager @ Adobe</div>
+        <a class="profile-email" href="mailto:roberra@alumni.upenn.edu">roberra@alumni.upenn.edu</a>
       </div>
     </div>
 
@@ -300,7 +311,7 @@
             <span class="logo" style="background: #E1251B;"></span>
             <span class="entry-role">Principal Product Manager @ Adobe</span>
           </div>
-          <div class="entry-desc">Constructing customer centric user journeys across the Creative Cloud. Products: Photoshop Web (0→1), Photoshop Mobile (0→1), Photoshop Desktop, and Firefly Boards (0→1).</div>
+          <div class="entry-desc">Constructing customer centric user journeys across the Creative Cloud. Products: Photoshop Web (0→1), Photoshop Desktop, and Firefly Boards.</div>
           <div class="entry-tags">Customer Research · Feature Adoption · Freemium · Generative AI · Onboarding · Problem Discovery · Product Market Fit · Trial Conversion · Generative Fill · AI features</div>
         </div>
       </div>
