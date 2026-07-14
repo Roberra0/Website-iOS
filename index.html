@@ -182,6 +182,7 @@
     }
     /* pill wrapper */
     .app-icon {
+      position: relative;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -268,9 +269,35 @@
       justify-content: center;
       background: #f5f5f0;
     }
+
+    /* ── PHOTOS OVERLAY ── */
+    #photosOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f5f0;
+    }
+    .photos-frame {
+      flex: 1;
+      width: 100%;
+      border: none;
+    }
     .imsg-window {
       width: 595px;
       height: 520px;
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .photos-window {
+      width: 714px;
+      height: 624px;
       background: #fff;
       border-radius: 28px;
       box-shadow: 0 8px 40px rgba(0,0,0,0.18);
@@ -410,6 +437,13 @@
         zoom: var(--mobile-scale, 1);
       }
       .imsg-window {
+        zoom: calc(1 / var(--mobile-scale, 1));
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+      }
+      .photos-window {
         zoom: calc(1 / var(--mobile-scale, 1));
         width: 100vw;
         height: 100vh;
@@ -579,6 +613,22 @@
     </div>
   </div>
 
+  <!-- Photos overlay -->
+  <div id="photosOverlay" style="opacity:0;pointer-events:none;">
+    <div class="photos-window">
+      <div class="imsg-header">
+        <button class="imsg-back" id="photosBack">
+          <svg viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.5 1.5L2 8L8.5 14.5" stroke="#007AFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back
+        </button>
+        <span class="imsg-name">Roberra's Captured Photos</span>
+      </div>
+      <iframe class="photos-frame" id="photosFrame" title="Photos"></iframe>
+    </div>
+  </div>
+
   <script>
     const card            = document.getElementById('card');
     const avatar          = document.getElementById('avatar');
@@ -591,6 +641,8 @@ const hblurKernel     = document.getElementById('hblur-kernel');
     const messageOverlay  = document.getElementById('messageOverlay');
     const blueBubble      = document.getElementById('blueBubble');
     const msgIcon         = document.getElementById('msgIcon');
+    const photosOverlay   = document.getElementById('photosOverlay');
+    const photosFrame     = document.getElementById('photosFrame');
 
     const START_WIDTH  = 380;
     const END_WIDTH    = 595;
@@ -845,6 +897,42 @@ const hblurKernel     = document.getElementById('hblur-kernel');
       }, 150);
     }
 
+    function enterPhotosState() {
+      if (running) return;
+      track('photos_icon_click', { action: 'open_photos_overlay' });
+      card.style.transition = 'opacity 200ms ease';
+      card.style.opacity = '0';
+      card.style.pointerEvents = 'none';
+      setTimeout(() => {
+        if (!photosFrame.src) photosFrame.src = 'photos.html';
+        photosOverlay.style.transition = 'opacity 220ms ease';
+        photosOverlay.style.opacity = '1';
+        photosOverlay.style.pointerEvents = 'auto';
+      }, 150);
+    }
+
+    function exitPhotosState() {
+      photosOverlay.style.transition = 'opacity 180ms ease';
+      photosOverlay.style.opacity = '0';
+      photosOverlay.style.pointerEvents = 'none';
+      setTimeout(() => {
+        card.style.transition = 'opacity 200ms ease';
+        card.style.opacity = '1';
+        card.style.pointerEvents = 'auto';
+        setTimeout(() => { card.style.transition = ''; }, 200);
+      }, 120);
+    }
+
+    document.getElementById('photosBack').addEventListener('click', e => {
+      e.stopPropagation();
+      track('photos_back_button_click', { action: 'close_photos_overlay' });
+      exitPhotosState();
+    });
+
+    photosOverlay.addEventListener('click', e => {
+      if (e.target === photosOverlay) exitPhotosState();
+    });
+
     let overlayClickHandler = null;
 
     function enableOverlayClose() {
@@ -961,8 +1049,7 @@ const hblurKernel     = document.getElementById('hblur-kernel');
             track('github_icon_click', { destination: 'github.com/roberra0' });
             window.open('https://github.com/roberra0', '_blank');
           } else if (label === 'Photos') {
-            track('photos_icon_click', { destination: 'photos.html' });
-            window.location.href = 'photos.html';
+            enterPhotosState();
           }
         }
       });

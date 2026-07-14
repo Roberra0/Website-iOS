@@ -27,8 +27,8 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #000;
-      color: #fff;
+      background: #fff;
+      color: #1c1c1e;
       font-family: -apple-system, 'SF Pro Display', system-ui, sans-serif;
       min-height: 100vh;
     }
@@ -38,14 +38,24 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      background: rgba(0,0,0,0.85);
+      background: rgba(255,255,255,0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 16px 20px 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .topbar-title-center {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      pointer-events: none;
     }
     .topbar-title {
       font-size: 28px;
@@ -63,27 +73,19 @@
       gap: 4px;
     }
 
-    /* ── SECTION LABEL ── */
-    .section-label {
-      padding: 22px 20px 10px;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.2px;
-    }
-
     /* ── PHOTO GRID ── */
     .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 2px;
-      padding: 0 0 40px;
+      padding: 12px 12px 40px;
     }
     .grid-item {
       position: relative;
       aspect-ratio: 1 / 1;
       overflow: hidden;
       cursor: pointer;
-      background: #1c1c1e;
+      background: #f2f2f2;
     }
     .grid-item img {
       width: 100%;
@@ -99,7 +101,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.95);
+      background: rgba(255,255,255,0.97);
       z-index: 100;
       align-items: center;
       justify-content: center;
@@ -117,7 +119,7 @@
       top: 20px;
       right: 24px;
       font-size: 30px;
-      color: #fff;
+      color: #1c1c1e;
       cursor: pointer;
       opacity: 0.7;
       line-height: 1;
@@ -126,22 +128,25 @@
     .lightbox-caption {
       margin-top: 16px;
       font-size: 15px;
-      color: rgba(255,255,255,0.6);
+      color: rgba(28,28,30,0.6);
     }
   </style>
 </head>
 <body>
 
-  <div class="topbar">
-    <a href="index.html#end" class="topbar-back">
+  <div class="topbar" id="topbar">
+    <a href="index.html#end" class="topbar-back" id="topbarBack">
       <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M8.5 1.5L1.5 8L8.5 14.5" stroke="#0A84FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       Back
     </a>
   </div>
-
-  <div class="section-label">Recents</div>
+  <script>
+    if (window.self !== window.top) {
+      document.getElementById('topbar').style.display = 'none';
+    }
+  </script>
 
   <div class="grid" id="grid"></div>
 
@@ -206,7 +211,6 @@
       { src: 'photos/SzbrO9tvvZ.jpg',   label: '' },
       { src: 'photos/aM1PdVp5xhE.jpg',  label: '' },
       { src: 'photos/aVHQn8qppAW.jpg',  label: '' },
-      { src: 'photos/alDFUOpQ06p.jpg',  label: '' },
       { src: 'photos/ayHX6KpAp32.jpg',  label: '' },
       { src: 'photos/f0WKrdKY3n.jpg',   label: '' },
       { src: 'photos/yMQkOTnHbF.jpg',   label: '' },
