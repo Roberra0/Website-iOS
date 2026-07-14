@@ -169,7 +169,7 @@
     .app-icons {
       position: absolute;
       left: 56px;          /* after arrow */
-      right: 94px;         /* before memoji (595 - 501) */
+      right: 134px;        /* before memoji, plus extra breathing room */
       top: 50%;
       transform: translateY(-50%);
       display: flex;
@@ -542,6 +542,24 @@
           </svg>
         </div>
         <span class="app-icon-label">Photos</span>
+      </div>
+      <div class="app-icon">
+        <div class="app-icon-clip" data-label="Bookshelf">
+          <img src="icons/bookshelf.png" alt="Bookshelf" class="icon-desktop">
+          <svg class="icon-mobile" width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="bkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#FFB92E"/>
+                <stop offset="100%" stop-color="#E8720C"/>
+              </linearGradient>
+            </defs>
+            <circle cx="25" cy="25" r="25" fill="url(#bkGrad)"/>
+            <path d="M25 17.5C23 14.8 19.5 13.5 15.5 13.5C14.7 13.5 14 14.2 14 15V32.5C14 33.3 14.7 34 15.5 34C19.5 34 23 35.3 25 38" fill="#F0F0F0"/>
+            <path d="M25 17.5C27 14.8 30.5 13.5 34.5 13.5C35.3 13.5 36 14.2 36 15V32.5C36 33.3 35.3 34 34.5 34C30.5 34 27 35.3 25 38" fill="#E4E4E4"/>
+            <rect x="24.3" y="17" width="1.4" height="21" fill="#D8720C"/>
+          </svg>
+        </div>
+        <span class="app-icon-label">Bookshelf</span>
       </div>
       <div class="app-icon">
         <div class="app-icon-clip"><img src="icons/github.ico" alt="GitHub" style="width:44px;height:44px;border-radius:50%;margin-top:-3px;"></div>
@@ -963,6 +981,9 @@ const hblurKernel     = document.getElementById('hblur-kernel');
           } else if (label === 'Photos') {
             track('photos_icon_click', { destination: 'photos.html' });
             window.location.href = 'photos.html';
+          } else if (label === 'Bookshelf') {
+            track('bookshelf_icon_click', { destination: 'bookshelf.html' });
+            window.location.href = 'bookshelf.html';
           }
         }
       });

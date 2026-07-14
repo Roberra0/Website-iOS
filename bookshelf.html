@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bookshelf</title>
+
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug getPageviewId".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_w6WbtcM7SM3HzPoSW5VDQbYwW7FW6gxun3d32HGkeUi8', {
+      api_host: 'https://us.i.posthog.com',
+      person_profiles: 'identified_only'
+    });
+    // Active time tracking
+    let activeMs = 0, lastActive = Date.now();
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { activeMs += Date.now() - lastActive; }
+      else { lastActive = Date.now(); }
+    });
+    window.addEventListener('beforeunload', () => {
+      if (!document.hidden) activeMs += Date.now() - lastActive;
+      posthog.capture('time_on_page', { active_ms: activeMs, page: 'bookshelf' });
+    });
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f5f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Adobe Clean', 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+      padding: 40px 20px;
+    }
+
+    .shelf-window {
+      width: 720px;
+      max-width: 100%;
+      max-height: 85vh;
+      background: #fff;
+      border-radius: 28px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .shelf-header {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border-bottom: 1px solid #e5e5ea;
+      position: relative;
+      padding: 14px 16px;
+    }
+    .shelf-back {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 17px;
+      color: #007AFF;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px 6px;
+      text-decoration: none;
+    }
+    .shelf-back:hover { opacity: 0.7; }
+    .shelf-back svg { width: 10px; height: 16px; }
+
+    .shelf-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1c1c1e;
+    }
+
+    .shelf-goodreads a {
+      font-size: 13px;
+      color: #007AFF;
+      text-decoration: none;
+      opacity: 0.35;
+    }
+    .shelf-goodreads a:hover { opacity: 1; }
+
+    .shelf-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0 32px;
+      scrollbar-width: none;
+    }
+    .shelf-content::-webkit-scrollbar { display: none; }
+
+    .discipline {
+      padding-top: 24px;
+    }
+    .discipline-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1c1c1e;
+      letter-spacing: -0.2px;
+      margin-bottom: 14px;
+      padding: 0 24px;
+    }
+
+    .cover-grid {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding: 0 24px 6px;
+      scrollbar-width: none;
+    }
+    .cover-grid::-webkit-scrollbar { display: none; }
+    .cover {
+      cursor: default;
+      flex: 0 0 100px;
+      width: 100px;
+    }
+    .cover-image {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.15),
+        0 4px 10px rgba(0,0,0,0.12);
+    }
+    .cover-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="shelf-window">
+    <div class="shelf-header">
+      <a href="index.html#end" class="shelf-back">
+        <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 1.5L1.5 8L8.5 14.5" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back
+      </a>
+      <div class="shelf-title">Roberra's Favorite Reads</div>
+      <div class="shelf-goodreads">
+        <a href="https://www.goodreads.com/user/show/98940253-roberra-aklilu" target="_blank" rel="noopener">Full Bookshelf</a>
+      </div>
+    </div>
+
+    <div class="shelf-content" id="shelfContent"></div>
+  </div>
+
+  <script>
+    const books = [
+      { title: "How to Know a Person", author: "David Brooks", rating: 5, image: "How to Know a Person.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "The Lean Startup", author: "Eric Ries", rating: 5, image: "The Lean Startup.jpg", discipline: "Business & Economics" },
+      { title: "The Startup Owner's Manual", author: "Steve Blank", rating: 5, image: "The Startup Owners Manual.jpg", discipline: "Business & Economics" },
+      { title: "Shoe Dog", author: "Phil Knight", rating: 5, image: "Shoe Dog.jpg", discipline: "Business & Economics" },
+      { title: "Prisoners of Geography", author: "Tim Marshall", rating: 5, image: "Prisoners of Geography.jpg", discipline: "Philosophy, Politics & World Affairs" },
+      { title: "The Wisdom Of Finance", author: "Mihir Desai", rating: 5, image: "The Wisdom of Finance.jpg", discipline: "Business & Economics" },
+      { title: "The Hitchhiker's Guide to the Galaxy", author: "Douglas Adams", rating: 5, image: "The Hitchhikers Guide to the Galaxy.jpg", discipline: "Fiction" },
+      { title: "The Da Vinci Code", author: "Dan Brown", rating: 5, image: "The Da Vinci Code.jpg", discipline: "Fiction" },
+      { title: "You're Not Listening", author: "Kate Murphy", rating: 5, image: "Youre Not Listening.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "Outliers", author: "Malcolm Gladwell", rating: 5, image: "Outliers.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "Zero to One", author: "Peter Thiel", rating: 5, image: "Zero to One.jpg", discipline: "Business & Economics" },
+      { title: "Atomic Habits", author: "James Clear", rating: 5, image: "Atomic Habits.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "The Courage to Be Disliked", author: "Ichiro Kishimi", rating: 5, image: "The Courage to Be Disliked.jpg", discipline: "Philosophy, Politics & World Affairs" },
+      { title: "The Secret Life of Groceries", author: "Benjamin Lorr", rating: 5, image: "The Secret Life of Groceries.jpg", discipline: "Business & Economics" },
+      { title: "The Alchemist", author: "Paulo Coelho", rating: 5, image: "The Alchemist.jpg", discipline: "Fiction" },
+      { title: "Meditations of Marcus Aurelius", author: "Marcus Aurelius", rating: 5, image: "Meditations.jpg", discipline: "Philosophy, Politics & World Affairs" },
+      { title: "A Promised Land", author: "Barack Obama", rating: 5, image: "A Promised Land.jpg", discipline: "Philosophy, Politics & World Affairs" },
+      { title: "Storyworthy", author: "Matthew Dicks", rating: 5, image: "Storyworthy.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "The Cold Start Problem", author: "Andrew Chen", rating: 5, image: "The Cold Start Problem.jpg", discipline: "Business & Economics" },
+      { title: "Alice's Adventures in Wonderland", author: "Lewis Carroll", rating: 5, image: "Alices Adventures in Wonderland.jpg", discipline: "Fiction" },
+      { title: "Talking to Strangers", author: "Malcolm Gladwell", rating: 5, image: "Talking to Strangers.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "2030: How Today's Biggest Trends Will Collide and Reshape the Future of Everything", author: "Mauro F. Guillen", rating: 4, image: "2030.jpg", discipline: "Philosophy, Politics & World Affairs" },
+      { title: "Travels with Charley: In Search of America", author: "John Steinbeck", rating: 4, image: "Travels with Charley.jpg", discipline: "Philosophy, Politics & World Affairs" },
+      { title: "Contagious", author: "Jonah Berger", rating: 4, image: "Contagious.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "Poverty, by America", author: "Matthew Desmond", rating: 4, image: "Poverty by America.jpg", discipline: "Business & Economics" },
+      { title: "Ender's Game", author: "Orson Scott Card", rating: 4, image: "Enders Game.jpg", discipline: "Fiction" },
+      { title: "The Coddling of the American Mind", author: "Jonathan Haidt", rating: 4, image: "The Coddling of the American Mind.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "Freakonomics Revised and Expanded Edition", author: "Steven D. Levitt", rating: 4, image: "Freakonomics.jpg", discipline: "Business & Economics" },
+      { title: "The Innovator's Dilemma", author: "Clayton M. Christensen", rating: 4, image: "The Innovators Dilemma.jpg", discipline: "Business & Economics" },
+      { title: "Walden or, Life in the Woods", author: "Henry David Thoreau", rating: 4, image: "Walden.jpg", discipline: "Philosophy, Politics & World Affairs" },
+      { title: "Ready Player One", author: "Ernest Cline", rating: 4, image: "Ready Player One.jpg", discipline: "Fiction" },
+      { title: "The Tipping Point", author: "Malcolm Gladwell", rating: 4, image: "The Tipping Point.jpg", discipline: "Psychology & Behavioral Science" },
+      { title: "Hackers & Painters", author: "Paul Graham", rating: 4, image: "Hackers and Painters.jpg", discipline: "Philosophy, Politics & World Affairs" },
+    ];
+
+    const disciplineOrder = [
+      "Psychology & Behavioral Science",
+      "Business & Economics",
+      "Fiction",
+      "Philosophy, Politics & World Affairs",
+    ];
+
+    const byDiscipline = new Map();
+    disciplineOrder.forEach(d => byDiscipline.set(d, []));
+    books.forEach(b => {
+      if (!byDiscipline.has(b.discipline)) byDiscipline.set(b.discipline, []);
+      byDiscipline.get(b.discipline).push(b);
+    });
+
+    const content = document.getElementById('shelfContent');
+
+    byDiscipline.forEach(titles => titles.sort((a, b) => b.rating - a.rating));
+
+    byDiscipline.forEach((titles, discipline) => {
+      if (!titles.length) return;
+
+      const section = document.createElement('div');
+      section.className = 'discipline';
+
+      const heading = document.createElement('div');
+      heading.className = 'discipline-title';
+      heading.textContent = discipline;
+      section.appendChild(heading);
+
+      const grid = document.createElement('div');
+      grid.className = 'cover-grid';
+
+      titles.forEach(book => {
+        const cover = document.createElement('div');
+        cover.className = 'cover';
+
+        const imageWrap = document.createElement('div');
+        imageWrap.className = 'cover-image';
+        const img = document.createElement('img');
+        img.src = `bookshelf/covers/${book.image}`;
+        img.alt = book.title;
+        img.loading = 'lazy';
+        imageWrap.appendChild(img);
+
+        cover.appendChild(imageWrap);
+        grid.appendChild(cover);
+      });
+
+      section.appendChild(grid);
+      content.appendChild(section);
+    });
+  </script>
+
+</body>
+</html>
