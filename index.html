@@ -465,6 +465,25 @@
       .app-icon-label { display: none !important; }
       .app-icon:hover { background: transparent; gap: 0; padding-right: 4px; }
     }
+    #mobile-block {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: #fff;
+      font-family: 'Adobe Clean', 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+      font-size: clamp(1.2rem, 5vw, 2rem);
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 2rem;
+    }
+    @media (pointer: coarse) and (hover: none) {
+      #mobile-block { display: flex; }
+    }
   </style>
 
   <!-- Directional (horizontal) blur filter -->
@@ -477,6 +496,7 @@
   </svg>
 </head>
 <body>
+  <div id="mobile-block">Sorry, only compatible on desktop</div>
   <div class="card" id="card">
 
     <!-- Profile photo -->
@@ -513,7 +533,7 @@
     <div class="app-icons" id="appIcons">
       <div class="app-icon" id="msgIcon">
         <div class="app-icon-clip">
-          <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+          <svg width="45" height="45" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" style="transform: translateY(-2px);">
             <defs>
               <linearGradient id="msgGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stop-color="#67FF81"/>
@@ -579,7 +599,7 @@
       </div>
       <div class="app-icon">
         <div class="app-icon-clip" data-label="Bookshelf">
-          <img src="icons/bookshelf.png" alt="Bookshelf" class="icon-desktop">
+          <img src="icons/bookshelf.png" alt="Bookshelf" class="icon-desktop" style="transform: translateY(-2px);">
           <svg class="icon-mobile" width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="bkGrad" x1="0" y1="0" x2="0" y2="1">
@@ -596,7 +616,7 @@
         <span class="app-icon-label">Bookshelf</span>
       </div>
       <div class="app-icon">
-        <div class="app-icon-clip"><img src="icons/github.ico" alt="GitHub" style="width:44px;height:44px;border-radius:50%;margin-top:-3px;"></div>
+        <div class="app-icon-clip"><img src="icons/github.ico" alt="GitHub" style="width:41px;height:41px;border-radius:50%;margin-top:-3px;"></div>
         <span class="app-icon-label">GitHub</span>
       </div>
     </div>

@@ -238,9 +238,29 @@
         margin-top: 0;
       }
     }
+    #mobile-block {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: #fff;
+      font-family: 'Adobe Clean', 'SF Pro Text', 'SF Pro Icons', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+      font-size: clamp(1.2rem, 5vw, 2rem);
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 2rem;
+    }
+    @media (pointer: coarse) and (hover: none) {
+      #mobile-block { display: flex; }
+    }
   </style>
 </head>
 <body>
+  <div id="mobile-block">Sorry, only compatible on desktop</div>
   <div class="page">
 
     <a href="index.html#end" class="back">
